@@ -1,11 +1,15 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 import useStyles from './styles';
 
 const Home = () => {
     const classes = useStyles();
     
     return (
-        <h1>Welcome to the homepage!</h1>
+        <div>
+            <h1>Welcome to the homepage!</h1>
+            <Link to='/auth'>Log In</Link>
+        </div>
     );
 };
 
