@@ -35,14 +35,3 @@ export const signout = (navigate) => async(dispatch) => {
         console.log(error);
     }
 }
-
-export const issignedin = () => async(dispatch) => {
-    try {
-        const { data } = await api.isSignedIn();
-
-        dispatch({ type: AUTH, data });
-        return data;
-    } catch (error) {
-        console.log(error);
-    }
-}

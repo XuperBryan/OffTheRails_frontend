@@ -6,7 +6,7 @@ import useStyles from './styles';
 import Input from './Input';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { signin, signup, signout, issignedin } from '../../actions/auth';
+import { signin, signup, signout} from '../../actions/auth';
 
 
 const initialState = { first_name: '', last_name: '', email: '', password: '', password_confirmation: ''};
@@ -15,27 +15,10 @@ const Auth = () => {
     const classes = useStyles();
     const [showPassword, setShowPassword] = useState(false);
     const [isSignup, setIsSignup] = useState(false);
-    const [isSignin, setIsSignin] = useState(true);
-    const [isLogout, setIsLogout] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [formData, setFormData] = useState(initialState);
-    
-    useEffect(() => {
-        dispatch(issignedin());
-    }, []);
-
-
-    const isLoggedIn = useSelector((state) => state.authData);
-    console.log(isLoggedIn);
-    console.log(typeof(isLoggedIn));
-    if (isLoggedIn != null) {
-        console.log(isLoggedIn[logged_in]);
-    }
-    //setIsLogout(isLogout = !isLoggedIn.logged_in);
-    useEffect(() => {
-        setIsLogout(isLoggedIn);
-    }, [isLoggedIn]);
+    const user = JSON.parse(localStorage.getItem('profile'));
 
 
     const handleSubmit = (e) => {
@@ -58,10 +41,18 @@ const Auth = () => {
 
     const switchMode = () => {
         setIsSignup((prevSignUp) => !prevSignUp);
-        setIsSignin((prevSignIn) => !prevSignIn);
         setShowPassword(false);
     }
 
+    console.log(user);
+
+    if (user?.logged_in) {
+        return (
+            <Button onClick={() => dispatch(signout(navigate))}>
+                { "Log Out"}
+            </Button>
+        )
+    }
     
     
     return (
@@ -79,12 +70,8 @@ const Auth = () => {
                                 <Input name="last_name" label="Last Name" handleChange={handleChange} half />
                             </>
                         )}
-                        { (isSignin || isSignup) && (
-                            <>
-                                <Input name="email" label="Email Address" handleChange={handleChange} type="email"/>
-                                <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword}/>
-                            </>
-                        )}
+                        <Input name="email" label="Email Address" handleChange={handleChange} type="email"/>
+                        <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword}/>
                         { isSignup && (
                         <Input name="password_confirmation" label="Repeat Password" handleChange={handleChange} type="password" />
                         )}

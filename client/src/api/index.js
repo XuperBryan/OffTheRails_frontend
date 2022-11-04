@@ -13,4 +13,3 @@ API.interceptors.request.use((req) => {
 export const signIn = (formData) => API.post('/login', formData);
 export const signUp = (formData) => API.post('/users', formData);
 export const signOut = () => API.post('/logout');
-export const isSignedIn = () => API.get('/logged_in');
