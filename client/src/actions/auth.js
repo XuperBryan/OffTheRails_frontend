@@ -23,3 +23,26 @@ export const signup = (formData, navigate) => async (dispatch) => {
         console.log(error);
     }
 }
+
+export const signout = (navigate) => async(dispatch) => {
+    try {
+        const { data } = await api.signOut();
+
+        dispatch({ type: AUTH, data });
+
+        navigate('/');
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const issignedin = () => async(dispatch) => {
+    try {
+        const { data } = await api.isSignedIn();
+
+        dispatch({ type: AUTH, data });
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
