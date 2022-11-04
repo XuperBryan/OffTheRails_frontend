@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:3000' }); // replace with deployment link
+const API = axios.create({ baseURL: 'http://Justin.eba-pqkhfm2c.us-west-2.elasticbeanstalk.com' }); // replace with deployment link
 // const API = axios.create({ baseURL: 'http://localhost:3000' });
 
 API.interceptors.request.use((req) => {
