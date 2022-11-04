@@ -5,7 +5,7 @@ import useStyles from './styles';
 import Input from './Input';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { signin, signup } from '../../actions/auth';
+import { signin, signup, signout} from '../../actions/auth';
 
 
 const initialState = { first_name: '', last_name: '', email: '', password: '', password_confirmation: ''};
@@ -17,6 +17,8 @@ const Auth = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [formData, setFormData] = useState(initialState);
+    const user = JSON.parse(localStorage.getItem('profile'));
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -41,6 +43,15 @@ const Auth = () => {
         setShowPassword(false);
     }
 
+    console.log(user);
+
+    if (user?.logged_in) {
+        return (
+            <Button onClick={() => dispatch(signout(navigate))}>
+                { "Log Out"}
+            </Button>
+        )
+    }
     
     
     return (
